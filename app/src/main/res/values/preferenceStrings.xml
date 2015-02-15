@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="PREFS">PrefsFile</string>
+    <string name="lastUpdateTime">lastUpdateTime</string>
+    <string name="fromCurrency">fromCurrency</string>
+    <string name="toCurrency">toCurrency</string>
+    <string name="fromValue">fromValue</string>
+    <string name="numberCreated">numberCreated</string>
+    <string name="numberCreatedTotal">numberCreatedTotal</string>
+    <string name="numberResumed">numberResumed</string>
+    <string name="numberResumedTotal">numberResumedTotal</string>
+    <string name="lastOparation0">lastOperation0</string>
+    <string name="lastOparation1">lastOperation1</string>
+    <string name="lastOparation2">lastOperation2</string>
+    <string name="lastOparation3">lastOperation3</string>
+    <string name="lastOparation4">lastOperation4</string>
+</resources>

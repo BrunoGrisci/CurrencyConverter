@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="currency_name_array">
+        <item name="USD">USD</item>
+        <item name="JPY">JPY</item>
+        <item name="GBP">GBP</item>
+        <item name="CHF">CHF</item>
+        <item name="EUR">EUR</item>
+        <item name="AUD">AUD</item>
+        <item name="CNY">CNY</item>
+        <item name="CAD">CAD</item>
+        <item name="INR">INR</item>
+        <item name="BRL">BRL</item>
+        <item name="RUB">RUB</item>
+        <item name="MXN">MXN</item>
+    </string-array>
+
+    <string-array name="currency_full_name_array">
+        <item name="USD">United States Dollar</item>
+        <item name="JPY">Japan Yen</item>
+        <item name="GBP">United Kingdom Pound</item>
+        <item name="CHF">Switzerland Franc</item>
+        <item name="EUR">Euro Member Countries</item>
+        <item name="AUD">Australia Dollar</item>
+        <item name="CNY">China Yuan Renminbi</item>
+        <item name="CAD">Canada Dollar</item>
+        <item name="INR">India Rupee</item>
+        <item name="BRL">Brazil Real</item>
+        <item name="RUB">Russia Ruble</item>
+        <item name="MXN">Mexico Peso</item>
+    </string-array>
+
+    <string name="USD">$</string>
+    <string name="JPY">¥</string>
+    <string name="GBP">£</string>
+    <string name="CHF">CHF</string>
+    <string name="EUR">€</string>
+    <string name="AUD">$</string>
+    <string name="CNY">¥</string>
+    <string name="CAD">$</string>
+    <string name="INR">₹</string>
+    <string name="BRL">R$</string>
+    <string name="RUB">руб</string>
+    <string name="MXN">$</string>
+
+</resources>
