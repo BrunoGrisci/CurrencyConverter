@@ -64,6 +64,7 @@ public class Converter extends ActionBarActivity {
 
     boolean swapedFrom = false;
     boolean swapedTo = false;
+    boolean swap = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,7 @@ public class Converter extends ActionBarActivity {
 
         numCreated = Integer.parseInt(savedRates.getString(getResources().getString(R.string.numberCreated), "0")) + 1;
         if (numCreated > 10000) {
-            numberCreated = 1;
+            numCreated = 1;
         }
         numberCreated.setText(String.valueOf(numCreated));
         numberResumed.setText(savedRates.getString(getResources().getString(R.string.numberResumed), "0"));
@@ -237,6 +238,14 @@ public class Converter extends ActionBarActivity {
 
                 swapedFrom = true;
                 swapedTo = true;
+
+                if (swap) {
+                    swapButton.setBackground(getResources().getDrawable(R.drawable.swapbuttonsmall));
+                }
+                else {
+                    swapButton.setBackground(getResources().getDrawable(R.drawable.swapbuttonsmallinverted));
+                }
+                swap = !swap;
             }
         });
     }
@@ -276,7 +285,7 @@ public class Converter extends ActionBarActivity {
         SharedPreferences currentStatus = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
         numResumed = Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberResumed), "0")) + 1;
         if (numResumed > 10000) {
-            numResumed = 0;
+            numResumed = 1;
         }
         numberResumed.setText(String.valueOf(numResumed));
 
