@@ -6,9 +6,9 @@
     <string name="toCurrency">toCurrency</string>
     <string name="fromValue">fromValue</string>
     <string name="numberCreated">numberCreated</string>
-    <string name="numberCreatedTotal">numberCreatedTotal</string>
+    <string name="numberCreatedLocal">numberCreatedLocal</string>
     <string name="numberResumed">numberResumed</string>
-    <string name="numberResumedTotal">numberResumedTotal</string>
+    <string name="numberResumedLocal">numberResumedLocal</string>
     <string name="lastOparation0">lastOperation0</string>
     <string name="lastOparation1">lastOperation1</string>
     <string name="lastOparation2">lastOperation2</string>

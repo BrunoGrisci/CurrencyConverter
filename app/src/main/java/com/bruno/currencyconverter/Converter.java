@@ -1,12 +1,10 @@
 package com.bruno.currencyconverter;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.service.notification.StatusBarNotification;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,7 +22,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import java.io.IOException;
@@ -104,14 +101,11 @@ public class Converter extends ActionBarActivity {
         lastOperations = (ListView) findViewById(R.id.lastOperations);
 
         SharedPreferences savedRates = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
-        String lastUpdateTime = savedRates.getString(getResources().getString(R.string.lastUpdateTime), getResources().getString(R.string.time));
-        lastUpdateText.setText(lastUpdateTime);
-
-        fromCurrencyText.setText(savedRates.getString(getResources().getString(R.string.fromValue), "1.0"));
-        fromSpinner.setSelection(adapter.getPosition(savedRates.getString(getResources().getString(R.string.fromCurrency), "GBP")));
-        toSpinner.setSelection(adapter.getPosition(savedRates.getString(getResources().getString(R.string.toCurrency), "USD")));
 
         numCreated = Integer.parseInt(savedRates.getString(getResources().getString(R.string.numberCreated), "0")) + 1;
+        if (numCreated > 10000) {
+            numberCreated = 1;
+        }
         numberCreated.setText(String.valueOf(numCreated));
         numberResumed.setText(savedRates.getString(getResources().getString(R.string.numberResumed), "0"));
 
@@ -121,15 +115,6 @@ public class Converter extends ActionBarActivity {
 
         operationsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, operations);
         lastOperations.setAdapter(operationsAdapter);
-
-        SharedPreferences savedOperations = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
-        operations.clear();
-        operations.add(0, savedOperations.getString(getResources().getString(R.string.lastOparation0), ""));
-        operations.add(1, savedOperations.getString(getResources().getString(R.string.lastOparation1), ""));
-        operations.add(2, savedOperations.getString(getResources().getString(R.string.lastOparation2), ""));
-        operations.add(3, savedOperations.getString(getResources().getString(R.string.lastOparation3), ""));
-        operations.add(4, savedOperations.getString(getResources().getString(R.string.lastOparation4), ""));
-        operationsAdapter.notifyDataSetChanged();
 
         if (isOnline()) {
             new RatesUpdate().execute(getResources().getString(R.string.updateURL));
@@ -259,22 +244,6 @@ public class Converter extends ActionBarActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currency_name_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        SharedPreferences currentStatus = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
-        fromCurrencyText.setText(currentStatus.getString(getResources().getString(R.string.fromValue), "1.0"));
-        fromSpinner.setSelection(adapter.getPosition(currentStatus.getString(getResources().getString(R.string.fromCurrency), "GBP")));
-        toSpinner.setSelection(adapter.getPosition(currentStatus.getString(getResources().getString(R.string.toCurrency), "USD")));
-
-        SharedPreferences savedOperations = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
-        operations.clear();
-        operations.add(0, savedOperations.getString(getResources().getString(R.string.lastOparation0), ""));
-        operations.add(1, savedOperations.getString(getResources().getString(R.string.lastOparation1), ""));
-        operations.add(2, savedOperations.getString(getResources().getString(R.string.lastOparation2), ""));
-        operations.add(3, savedOperations.getString(getResources().getString(R.string.lastOparation3), ""));
-        operations.add(4, savedOperations.getString(getResources().getString(R.string.lastOparation4), ""));
-        operationsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -306,10 +275,22 @@ public class Converter extends ActionBarActivity {
 
         SharedPreferences currentStatus = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
         numResumed = Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberResumed), "0")) + 1;
+        if (numResumed > 10000) {
+            numResumed = 0;
+        }
         numberResumed.setText(String.valueOf(numResumed));
 
         numResumedLocal = numResumedLocal + 1;
         numberResumedLocal.setText(" (" + String.valueOf(numResumedLocal) + ")");
+
+        numberCreated.setText(String.valueOf(Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberCreated), "0"))));
+
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currency_name_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        fromCurrencyText.setText(currentStatus.getString(getResources().getString(R.string.fromValue), "1.0"));
+        fromSpinner.setSelection(adapter.getPosition(currentStatus.getString(getResources().getString(R.string.fromCurrency), getResources().getString(R.string.GBP))));
+        toSpinner.setSelection(adapter.getPosition(currentStatus.getString(getResources().getString(R.string.toCurrency), getResources().getString(R.string.USD))));
 
         SharedPreferences savedOperations = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
         operations.clear();
