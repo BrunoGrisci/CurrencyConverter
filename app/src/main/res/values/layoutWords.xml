@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+    <string name="layoutLastUpdate">Last update: </string>
+    <string name="layoutNumCreated">Number of times created: </string>
+    <string name="layoutNumResumed">Number of times resumed: </string>
+    <string name="layoutConvertFrom">Convert from</string>
+    <string name="layoutConvertTo">To</string>
+    <string name="layoutZero">0.0</string>
+    <string name="layoutOne">1.0</string>
+    <string name="layoutEmpty"> </string>
+    <string name="layoutRateUpdate">Exchange rates updated!</string>
+    <string name="layoutUpdateFail">Unable to update currency rates.</string>
+</resources>

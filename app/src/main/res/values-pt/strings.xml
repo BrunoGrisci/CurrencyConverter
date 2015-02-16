@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="action_settings">Configurações</string>
+    <string name="app_name">Conversor de Moedas</string>
+    <string name="layoutConvertTo">Para</string>
+    <string name="layoutLastUpdate">"Última atualização: "</string>
+    <string name="layoutNumCreated">"Número de vezes criado: "</string>
+    <string name="layoutNumResumed">"Número de vezes retomado: "</string>
+    <string name="layoutRateUpdate">Taxas de conversão atualizadas!</string>
+    <string name="layoutUpdateFail">Não foi possível atualizar as taxas de conversão.</string>
+
+</resources>

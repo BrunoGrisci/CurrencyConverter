@@ -122,7 +122,7 @@ public class Converter extends ActionBarActivity {
         }
         else {
             Context context = getApplicationContext();
-            CharSequence text = "Unable to update currency rates.";
+            CharSequence text = getResources().getString(R.string.layoutUpdateFail);
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
@@ -234,7 +234,7 @@ public class Converter extends ActionBarActivity {
                 fromCurrencySymbol.setText(getResources().getString(getResources().getIdentifier(fromSpinner.getSelectedItem().toString(), "string", "com.bruno.currencyconverter")));
                 toCurrencySymbol.setText(getResources().getString(getResources().getIdentifier(toSpinner.getSelectedItem().toString(), "string", "com.bruno.currencyconverter")));
 
-                fromCurrencyText.setText("1.0");
+                fromCurrencyText.setText(getResources().getString(R.string.layoutOne));
 
                 swapedFrom = true;
                 swapedTo = true;
@@ -283,7 +283,7 @@ public class Converter extends ActionBarActivity {
         super.onResume();
 
         SharedPreferences currentStatus = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
-        numResumed = Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberResumed), "0")) + 1;
+        numResumed = Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberResumed), getResources().getString(R.string.layoutZero))) + 1;
         if (numResumed > 10000) {
             numResumed = 1;
         }
@@ -292,22 +292,24 @@ public class Converter extends ActionBarActivity {
         numResumedLocal = numResumedLocal + 1;
         numberResumedLocal.setText(" (" + String.valueOf(numResumedLocal) + ")");
 
-        numberCreated.setText(String.valueOf(Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberCreated), "0"))));
+        numberCreated.setText(String.valueOf(Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberCreated), getResources().getString(R.string.layoutZero)))));
 
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currency_name_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        fromCurrencyText.setText(currentStatus.getString(getResources().getString(R.string.fromValue), "1.0"));
+        fromCurrencyText.setText(currentStatus.getString(getResources().getString(R.string.fromValue), getResources().getString(R.string.layoutOne)));
         fromSpinner.setSelection(adapter.getPosition(currentStatus.getString(getResources().getString(R.string.fromCurrency), getResources().getString(R.string.GBP))));
         toSpinner.setSelection(adapter.getPosition(currentStatus.getString(getResources().getString(R.string.toCurrency), getResources().getString(R.string.USD))));
 
+        lastUpdateText.setText(currentStatus.getString(getResources().getString(R.string.lastUpdateTime), getResources().getString(R.string.time)));
+
         SharedPreferences savedOperations = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
         operations.clear();
-        operations.add(0, savedOperations.getString(getResources().getString(R.string.lastOparation0), ""));
-        operations.add(1, savedOperations.getString(getResources().getString(R.string.lastOparation1), ""));
-        operations.add(2, savedOperations.getString(getResources().getString(R.string.lastOparation2), ""));
-        operations.add(3, savedOperations.getString(getResources().getString(R.string.lastOparation3), ""));
-        operations.add(4, savedOperations.getString(getResources().getString(R.string.lastOparation4), ""));
+        operations.add(0, savedOperations.getString(getResources().getString(R.string.lastOparation0), getResources().getString(R.string.layoutEmpty)));
+        operations.add(1, savedOperations.getString(getResources().getString(R.string.lastOparation1), getResources().getString(R.string.layoutEmpty)));
+        operations.add(2, savedOperations.getString(getResources().getString(R.string.lastOparation2), getResources().getString(R.string.layoutEmpty)));
+        operations.add(3, savedOperations.getString(getResources().getString(R.string.lastOparation3), getResources().getString(R.string.layoutEmpty)));
+        operations.add(4, savedOperations.getString(getResources().getString(R.string.lastOparation4), getResources().getString(R.string.layoutEmpty)));
         operationsAdapter.notifyDataSetChanged();
     }
 
@@ -419,7 +421,7 @@ public class Converter extends ActionBarActivity {
             lastUpdateText.setText(result);
 
             Context context = getApplicationContext();
-            CharSequence text = "Exchange rates updated!";
+            CharSequence text = getResources().getString(R.string.layoutRateUpdate);
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
