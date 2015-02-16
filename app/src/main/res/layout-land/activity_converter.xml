@@ -57,6 +57,7 @@
                         android:layout_weight="1"
                         android:layout_gravity="end"
                         android:inputType="numberDecimal"
+                        android:maxLength="5"
                         android:ems="10"
                         android:id="@+id/fromCurrencyText" />
 
@@ -119,6 +120,7 @@
                         android:layout_gravity="start"
                         android:inputType="numberDecimal"
                         android:enabled="false"
+                        android:maxLength="5"
                         android:ems="10"
                         android:id="@+id/toCurrencyText" />
 

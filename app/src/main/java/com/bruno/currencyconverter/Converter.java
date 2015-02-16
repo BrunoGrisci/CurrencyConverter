@@ -57,12 +57,16 @@ public class Converter extends ActionBarActivity {
 
     ListView lastOperations;
     ArrayList<String> operations = new ArrayList<String>();
+    ArrayAdapter operationsAdapter;
 
     int numCreated;
     int numResumed;
 
     int numCreatedLocal = 0;
     int numResumedLocal = 0;
+
+    boolean swapedFrom = false;
+    boolean swapedTo = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +92,6 @@ public class Converter extends ActionBarActivity {
         toSpinner = (Spinner) findViewById(R.id.toSpinner);
         toSpinner.setAdapter(adapter);
 
-        fromSpinner.setSelection(adapter.getPosition("GBP"));
-        toSpinner.setSelection(adapter.getPosition("USD"));
-
         lastUpdateLabel = (TextView) findViewById(R.id.lastUpdateLabel);
         lastUpdateText = (TextView) findViewById(R.id.lastUpdateText);
         numberCreatedLabel = (TextView) findViewById(R.id.numberCreatedLabel);
@@ -106,15 +107,19 @@ public class Converter extends ActionBarActivity {
         String lastUpdateTime = savedRates.getString(getResources().getString(R.string.lastUpdateTime), getResources().getString(R.string.time));
         lastUpdateText.setText(lastUpdateTime);
 
+        fromCurrencyText.setText(savedRates.getString(getResources().getString(R.string.fromValue), "1.0"));
+        fromSpinner.setSelection(adapter.getPosition(savedRates.getString(getResources().getString(R.string.fromCurrency), "GBP")));
+        toSpinner.setSelection(adapter.getPosition(savedRates.getString(getResources().getString(R.string.toCurrency), "USD")));
+
         numCreated = Integer.parseInt(savedRates.getString(getResources().getString(R.string.numberCreated), "0")) + 1;
         numberCreated.setText(String.valueOf(numCreated));
         numberResumed.setText(savedRates.getString(getResources().getString(R.string.numberResumed), "0"));
 
         numCreatedLocal = numCreatedLocal + 1;
-        numberCreatedLocal.setText("(" + String.valueOf(numCreatedLocal) + ")");
-        numberResumedLocal.setText("(" + String.valueOf(numResumedLocal) + ")");
+        numberCreatedLocal.setText(" (" + String.valueOf(numCreatedLocal) + ")");
+        numberResumedLocal.setText(" (" + String.valueOf(numResumedLocal) + ")");
 
-        ArrayAdapter operationsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, operations);
+        operationsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, operations);
         lastOperations.setAdapter(operationsAdapter);
 
         SharedPreferences savedOperations = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
@@ -124,6 +129,7 @@ public class Converter extends ActionBarActivity {
         operations.add(2, savedOperations.getString(getResources().getString(R.string.lastOparation2), ""));
         operations.add(3, savedOperations.getString(getResources().getString(R.string.lastOparation3), ""));
         operations.add(4, savedOperations.getString(getResources().getString(R.string.lastOparation4), ""));
+        operationsAdapter.notifyDataSetChanged();
 
         if (isOnline()) {
             new RatesUpdate().execute(getResources().getString(R.string.updateURL));
@@ -161,6 +167,9 @@ public class Converter extends ActionBarActivity {
                 if (operations.size() > 5) {
                     operations.remove(operations.size() - 1);
                 }
+                operationsAdapter.notifyDataSetChanged();
+                swapedFrom = false;
+                swapedTo = false;
                 System.out.println(newOperation);
 
             }
@@ -173,17 +182,21 @@ public class Converter extends ActionBarActivity {
                 fromCurrencySymbol.setText(getResources().getString(getResources().getIdentifier(currencyName, "string", "com.bruno.currencyconverter")));
                 toCurrencyText.setText(exchangeCurrency(fromSpinner.getSelectedItem().toString(), toSpinner.getSelectedItem().toString(), fromCurrencyText.getDoubleValue()));
 
-                String fromValue = "0.0";
-                if (!fromCurrencyText.isEmpty()) {
-                    fromValue = fromCurrencyText.getText().toString();
-                }
+                if (!swapedFrom) {
+                    String fromValue = "0.0";
+                    if (!fromCurrencyText.isEmpty()) {
+                        fromValue = fromCurrencyText.getText().toString();
+                    }
 
-                String newOperation = fromSpinner.getSelectedItem().toString() + " " + fromValue + " = "+ toSpinner.getSelectedItem().toString() + " " + toCurrencyText.getText().toString();
-                operations.add(0, newOperation);
-                if (operations.size() > 5) {
-                    operations.remove(operations.size() - 1);
+                    String newOperation = fromSpinner.getSelectedItem().toString() + " " + fromValue + " = " + toSpinner.getSelectedItem().toString() + " " + toCurrencyText.getText().toString();
+                    operations.add(0, newOperation);
+                    if (operations.size() > 5) {
+                        operations.remove(operations.size() - 1);
+                    }
+                    operationsAdapter.notifyDataSetChanged();
+                    System.out.println(newOperation);
                 }
-                System.out.println(newOperation);
+                swapedFrom = false;
             }
 
             @Override
@@ -199,6 +212,22 @@ public class Converter extends ActionBarActivity {
                 String currencyName = toSpinner.getSelectedItem().toString();
                 toCurrencySymbol.setText(getResources().getString(getResources().getIdentifier(currencyName, "string", "com.bruno.currencyconverter")));
                 toCurrencyText.setText(exchangeCurrency(fromSpinner.getSelectedItem().toString(), toSpinner.getSelectedItem().toString(), fromCurrencyText.getDoubleValue()));
+
+                if (!swapedTo) {
+                    String toValue = "0.0";
+                    if (!toCurrencyText.isEmpty()) {
+                        toValue = toCurrencyText.getText().toString();
+                    }
+
+                    String newOperation = fromSpinner.getSelectedItem().toString() + " " + fromCurrencyText.getText().toString() + " = " + toSpinner.getSelectedItem().toString() + " " + toValue;
+                    operations.add(0, newOperation);
+                    if (operations.size() > 5) {
+                        operations.remove(operations.size() - 1);
+                    }
+                    operationsAdapter.notifyDataSetChanged();
+                    System.out.println(newOperation);
+                }
+                swapedTo = false;
             }
 
             @Override
@@ -220,6 +249,9 @@ public class Converter extends ActionBarActivity {
                 toCurrencySymbol.setText(getResources().getString(getResources().getIdentifier(toSpinner.getSelectedItem().toString(), "string", "com.bruno.currencyconverter")));
 
                 fromCurrencyText.setText("1.0");
+
+                swapedFrom = true;
+                swapedTo = true;
             }
         });
     }
@@ -242,6 +274,7 @@ public class Converter extends ActionBarActivity {
         operations.add(2, savedOperations.getString(getResources().getString(R.string.lastOparation2), ""));
         operations.add(3, savedOperations.getString(getResources().getString(R.string.lastOparation3), ""));
         operations.add(4, savedOperations.getString(getResources().getString(R.string.lastOparation4), ""));
+        operationsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -276,7 +309,7 @@ public class Converter extends ActionBarActivity {
         numberResumed.setText(String.valueOf(numResumed));
 
         numResumedLocal = numResumedLocal + 1;
-        numberResumedLocal.setText("(" + String.valueOf(numResumedLocal) + ")");
+        numberResumedLocal.setText(" (" + String.valueOf(numResumedLocal) + ")");
 
         SharedPreferences savedOperations = getSharedPreferences(getResources().getString(R.string.PREFS), 0);
         operations.clear();
@@ -285,6 +318,7 @@ public class Converter extends ActionBarActivity {
         operations.add(2, savedOperations.getString(getResources().getString(R.string.lastOparation2), ""));
         operations.add(3, savedOperations.getString(getResources().getString(R.string.lastOparation3), ""));
         operations.add(4, savedOperations.getString(getResources().getString(R.string.lastOparation4), ""));
+        operationsAdapter.notifyDataSetChanged();
     }
 
     @Override
