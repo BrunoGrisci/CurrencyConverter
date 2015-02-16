@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Convert from"
+                    android:text="@string/layoutConvertFrom"
                     android:id="@+id/fromCurrencyLabel"/>
 
                 <Spinner
@@ -90,7 +90,7 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="To"
+                    android:text="@string/layoutConvertTo"
                     android:id="@+id/toCurrencyLabel" />
 
                 <Spinner
@@ -164,14 +164,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Last update: "
+                        android:text="@string/layoutLastUpdate"
                         android:id="@+id/lastUpdateLabel" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Medium Text"
                         android:id="@+id/lastUpdateText" />
                 </LinearLayout>
 
@@ -185,21 +184,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Number of times created: "
+                        android:text="@string/layoutNumCreated"
                         android:id="@+id/numberCreatedLabel" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text=""
                         android:id="@+id/numberCreated" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text=""
                         android:id="@+id/numberCreatedLocal" />
                 </LinearLayout>
 
@@ -213,20 +210,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Number of times resumed: "
+                        android:text="@string/layoutNumResumed"
                         android:id="@+id/numberResumedLabel" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text=""
                         android:id="@+id/numberResumed" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/numberResumedLocal" />
                 </LinearLayout>

@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="action_settings">Instellingen</string>
+    <string name="app_name">Valuta-omzetter</string>
+    <string name="layoutConvertFrom">Converteren</string>
+    <string name="layoutConvertTo">Naar</string>
+    <string name="layoutLastUpdate">"Laatste update: "</string>
+    <string name="layoutNumCreated">"Aantal keren geschapen: "</string>
+    <string name="layoutNumResumed">"Aantal keren hervat: "</string>
+    <string name="layoutRateUpdate">Wisselkoersen bijgewerkt!</string>
+    <string name="layoutUpdateFail">Niet in staat om de wisselkoersen te actualiseren.</string>
+
+</resources>
