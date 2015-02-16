@@ -155,14 +155,18 @@ public class Converter extends ActionBarActivity {
                     fromValue = fromCurrencyText.getText().toString();
                 }
 
-                String newOperation = fromSpinner.getSelectedItem().toString() + " " + fromValue + " = "+ toSpinner.getSelectedItem().toString() + " " + toCurrencyText.getText().toString();
-                operations.add(0, newOperation);
-                if (operations.size() > 5) {
-                    operations.remove(operations.size() - 1);
+                String newOperation = fromSpinner.getSelectedItem().toString() + " " + fromValue + " = " + toSpinner.getSelectedItem().toString() + " " + toCurrencyText.getText().toString();
+                if (!operations.isEmpty()) {
+                    if (!newOperation.equals(operations.get(0))) {
+                        operations.add(0, newOperation);
+                        if (operations.size() > 5) {
+                            operations.remove(operations.size() - 1);
+                        }
+                        operationsAdapter.notifyDataSetChanged();
+                    }
+                    swapedFrom = false;
+                    swapedTo = false;
                 }
-                operationsAdapter.notifyDataSetChanged();
-                swapedFrom = false;
-                swapedTo = false;
             }
         });
 
@@ -181,12 +185,15 @@ public class Converter extends ActionBarActivity {
 
                     //Add new conversion to the list
                     String newOperation = fromSpinner.getSelectedItem().toString() + " " + fromValue + " = " + toSpinner.getSelectedItem().toString() + " " + toCurrencyText.getText().toString();
-                    operations.add(0, newOperation);
-                    if (operations.size() > 5) {
-                        operations.remove(operations.size() - 1);
+                    if (!operations.isEmpty()) {
+                        if (!newOperation.equals(operations.get(0))) {
+                            operations.add(0, newOperation);
+                            if (operations.size() > 5) {
+                                operations.remove(operations.size() - 1);
+                            }
+                            operationsAdapter.notifyDataSetChanged();
+                        }
                     }
-                    operationsAdapter.notifyDataSetChanged();
-                    System.out.println(newOperation);
                 }
                 swapedFrom = false;
             }
@@ -213,12 +220,15 @@ public class Converter extends ActionBarActivity {
 
                     //Add new conversion to the list
                     String newOperation = fromSpinner.getSelectedItem().toString() + " " + fromCurrencyText.getText().toString() + " = " + toSpinner.getSelectedItem().toString() + " " + toValue;
-                    operations.add(0, newOperation);
-                    if (operations.size() > 5) {
-                        operations.remove(operations.size() - 1);
+                    if (!operations.isEmpty()) {
+                        if (!newOperation.equals(operations.get(0))) {
+                            operations.add(0, newOperation);
+                            if (operations.size() > 5) {
+                                operations.remove(operations.size() - 1);
+                            }
+                            operationsAdapter.notifyDataSetChanged();
+                        }
                     }
-                    operationsAdapter.notifyDataSetChanged();
-                    System.out.println(newOperation);
                 }
                 swapedTo = false;
             }
@@ -306,7 +316,7 @@ public class Converter extends ActionBarActivity {
         numResumedLocal = numResumedLocal + 1;
         numberResumedLocal.setText(" (" + String.valueOf(numResumedLocal) + ")");
 
-        //Loads
+        //Loads the variables
         numberCreated.setText(String.valueOf(Integer.parseInt(currentStatus.getString(getResources().getString(R.string.numberCreated), getResources().getString(R.string.layoutZero)))));
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currency_name_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
