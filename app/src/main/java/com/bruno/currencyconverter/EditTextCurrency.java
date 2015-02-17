@@ -1,3 +1,7 @@
+/*Bruno Iochins Grisci ID 1497778
+Mobile and Ubiquitous Computing
+University of Birmingham 2015/1 */
+
 package com.bruno.currencyconverter;
 
 import android.content.Context;
